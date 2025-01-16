@@ -1,0 +1,23 @@
+.wave-container {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  
+  .wave-char {
+    display: inline-block;
+    animation: wave 1.5s ease-in-out 0.5s; /* Duration: 1.5s, Delay: 0.5s */
+    animation-iteration-count: 1; /* Animation stops after 3 cycles */
+    transform-origin: bottom center;
+  }  
+  
+  @keyframes wave {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  

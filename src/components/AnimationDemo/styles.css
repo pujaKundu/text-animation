@@ -1,0 +1,88 @@
+.animated-item {
+    display: inline-block;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+  }
+  
+  @keyframes blur {
+    0% {
+      filter: blur(10px);
+      opacity: 0;
+    }
+    100% {
+      filter: blur(0px);
+      opacity: 1;
+    }
+  }
+  
+@keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+      opacity: 0;
+    }
+    100% {
+      transform: rotate(360deg);
+      opacity: 1;
+    }
+  } 
+  
+  @keyframes flip {
+    0% {
+      transform: rotateY(0deg);
+      opacity: 0;
+    }
+    100% {
+      transform: rotateY(360deg);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes shoot {
+    0% {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scale {
+    0% {
+      transform: scale(2);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    50% {
+      transform: translateX(5px);
+    }
+    75% {
+      transform: translateX(-5px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes stagger {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }  
+  
