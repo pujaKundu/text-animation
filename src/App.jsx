@@ -4,6 +4,7 @@ import PhysicsBasedTransition from './components/SpringTransition/PhysicsBasedTr
 import Wave from './components/Wave/Wave'
 import AnimationManager from './components/AnimationManager'
 import AnimationDemo from './components/AnimationDemo/AnimationDemo'
+import TextAnimation from './components/TextAnimation/TextAnimation'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
      {/* <AnimationManager/> */}
      {/* text animations */}
      <AnimationDemo/>
+     {/* <TextAnimation/> */}
     </>
   )
 }

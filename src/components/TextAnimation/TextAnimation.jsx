@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
+import { animationSettings } from "./utils";
 
-const AnimationDemo = () => {
-  const [settings, setSettings] = useState({
-    animation: "blur", // blur, flip, shoot, scale, rotate, shake
-    partition: "character", // per-character, words, line, element
-    wrapper: "p", // wrapper tag (p, h1-h6, span)
-    delay: 0.1,
-    text: "Animate this text!",
-  });
-
+const TextAnimation = () => {
+  const [settings,setSettings] = useState(animationSettings);  
   const partitionText = () => {
     const { text, wrapper, partition } = settings;
     const WrapperTag = wrapper;
@@ -173,4 +167,4 @@ const AnimationDemo = () => {
   );
 };
 
-export default AnimationDemo;
+export default TextAnimation;

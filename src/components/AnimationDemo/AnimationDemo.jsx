@@ -3,17 +3,16 @@ import "./styles.css";
 
 const AnimationDemo = () => {
   const [settings, setSettings] = useState({
-    animation: "blur", // blur, flip, shoot, scale, rotate, shake
+    animation: "rotate", // blur, flip, shoot, scale, rotate, shake
     partition: "character", // per-character, words, line, element
-    wrapper: "p", // wrapper tag (p, h1-h6, span)
     delay: 0.1,
+    duration: 1, 
     text: "Animate this text!",
   });
 
   const partitionText = () => {
-    const { text, wrapper, partition } = settings;
-    const WrapperTag = wrapper;
-  
+    const { text, partition } = settings;
+
     // Wrap each character in a span tag for character partition
     const wrapCharacters = (word) => {
       return word.split("").map((char, index) => (
@@ -22,65 +21,59 @@ const AnimationDemo = () => {
         </span>
       ));
     };
-  
+
     if (partition === "character") {
-      return (
-        <WrapperTag className="animated-item">
-          {text.split(" ").map((word, index) => (
-            <>
-              <span key={index} className="animated-item">
-                {wrapCharacters(word)} 
-              </span>
-              {index < text.split(" ").length - 1 && " "}
-            </>
-          ))}
-        </WrapperTag>
-      );
-    }
-  
-    if (partition === "words") {
-      return (
-        <WrapperTag className="animated-item">
+        return (
+        <div>
         {text.split(" ").map((word, index) => (
-        <>
+            <>
+                <span key={index} className="animated-item">
+                        {wrapCharacters(word)}
+                </span>
+                      {index < text.split(" ").length - 1 && " "}
+                    </>
+                  ))}
+                </div>)
+       }
+  
+      if (partition === "words") {
+        return text.split(" ").map((word, index) => (
           <span key={index} className="animated-item">
-            {wrapCharacters(word)}
+            {word}
+            {index < text.split(" ").length - 1 && "\u00A0"}
           </span>
-          {index < text.split(" ").length - 1 && " "}
-        </>
-      ))}
-    </WrapperTag>
-      );
-    }
-  
+        ));
+      }
+
     if (partition === "line") {
-      const lines = text.split("\n"); 
+      const lines = text.split("\n");
       return (
-        <WrapperTag className="animated-item">
+        <span className="animated-item">
           {lines.map((line, index) => (
-            <div key={index} className="line">{line}</div>
+            <span key={index} className="line">
+              {line}
+            </span>
           ))}
-        </WrapperTag>
+        </span>
       );
     }
-  
+
     if (partition === "element") {
-      // Directly apply animation to the entire text wrapped in the wrapper tag
-      return <WrapperTag className="animated-item">{text}</WrapperTag>;
+      return <span className="animated-item">{text}</span>;
     }
-  
+
     return null;
   };
 
-  const animateElement = (element, animation, delay, index) => {
-    const staggerDelay = delay * index;
-    element.style.animation = `${animation} 1s ease ${staggerDelay}s forwards`;
-  };
+  const animateElement = (element, animation, baseDelay, duration, index) => {
+    const delay = baseDelay * index; 
+    element.style.animation = `${animation} ${duration}s ease ${delay}s forwards`; 
+  };  
 
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll(".animated-item"));
     elements.forEach((el, index) => {
-      animateElement(el, settings.animation, parseFloat(settings.delay), index);
+      animateElement(el, settings.animation, parseFloat(settings.delay), parseFloat(settings.duration), index);
     });
   }, [settings]);
 
@@ -88,13 +81,13 @@ const AnimationDemo = () => {
     const { name, value } = e.target;
     setSettings((prev) => ({
       ...prev,
-      [name]: name === "delay" ? parseFloat(value) : value,
+      [name]: name === "delay" || name === "duration" ? parseFloat(value) : value,
     }));
   };
 
   return (
     <div>
-      <h1>Text Animation</h1>
+      <h1>Animation</h1>
       <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "10px" }}>
         <label>
           Animation:{" "}
@@ -121,28 +114,10 @@ const AnimationDemo = () => {
             onChange={handleInputChange}
             style={{ marginRight: "10px" }}
           >
-            <option value="character">Per-Character</option>
+            <option value="character">Character</option>
             <option value="words">Words</option>
             <option value="line">Line</option>
             <option value="element">Element</option>
-          </select>
-        </label>
-        <label>
-          Wrapper:{" "}
-          <select
-            name="wrapper"
-            value={settings.wrapper}
-            onChange={handleInputChange}
-            style={{ marginRight: "10px" }}
-          >
-            <option value="span">Span</option>
-            <option value="p">Paragraph (p)</option>
-            <option value="h1">Heading 1 (h1)</option>
-            <option value="h2">Heading 2 (h2)</option>
-            <option value="h3">Heading 3 (h3)</option>
-            <option value="h4">Heading 4 (h4)</option>
-            <option value="h5">Heading 5 (h5)</option>
-            <option value="h6">Heading 6 (h6)</option>
           </select>
         </label>
         <label>
@@ -153,6 +128,18 @@ const AnimationDemo = () => {
             value={settings.delay}
             onChange={handleInputChange}
             placeholder="0.1"
+            step={0.1}
+            style={{ width: "60px", marginRight: "10px" }}
+          />
+        </label>
+        <label>
+          Duration:{" "} 
+          <input
+            type="number"
+            name="duration"
+            value={settings.duration}
+            onChange={handleInputChange}
+            placeholder="1"
             style={{ width: "60px", marginRight: "10px" }}
           />
         </label>
